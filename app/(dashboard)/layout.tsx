@@ -1,16 +1,18 @@
-import { Navbar } from '@/components/navbar';
+import { Navbar } from "@/components/navbar";
+import { Sidebar } from "@/components/sidebar";
 
 export default function RootLayout({
-	children,
+  children,
 }: Readonly<{
-	children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
-	return (
-		<>
-			<Navbar />
-			<main className='w-full grow flex flex-col justify-center items-center'>
-				{children}
-			</main>
-		</>
-	);
+  return (
+    <div className="w-full h-full bg-background flex relative">
+      <Sidebar />
+      <div className="w-full h-full flex flex-col">
+        <Navbar />
+        <main className="flex-1 p-5 relative">{children}</main>
+      </div>
+    </div>
+  );
 }
