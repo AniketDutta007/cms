@@ -16,11 +16,71 @@ enum Role {
   ADMIN
 }
 
+enum ItemType {
+  VEG
+  NON_VEG
+}
+
+enum ServiceType {
+  BREAKFAST
+  LUNCH
+  SNACKS
+}
+
 model User {
-  id       String   @id @default(uuid())
+  id       String @id @default(uuid())
   email    String
   name     String
   password String
   role     Role
+
   @@unique([email, role])
+}
+
+model Menu {
+  id          String      @id @default(uuid())
+  date        DateTime
+  serviceType ServiceType
+  items       MenuItems[]
+
+  @@unique([date, serviceType])
+}
+
+model MenuItems {
+  menu   Menu   @relation(fields: [menuId], references: [id])
+  menuId String
+  item   Item   @relation(fields: [itemId], references: [id])
+  itemId String
+
+  @@id([menuId, itemId])
+}
+
+model Item {
+  id          String       @id @default(uuid())
+  name        String       @unique
+  description String?
+  type        ItemType
+  image       String?
+  price       Float
+  combos      ComboItems[]
+  menus       MenuItems[]
+}
+
+model Combo {
+  id          String       @id @default(uuid())
+  date        DateTime
+  serviceType ServiceType
+  discount    Float
+  items       ComboItems[]
+
+  @@unique([date, serviceType])
+}
+
+model ComboItems {
+  combo   Combo  @relation(fields: [comboId], references: [id])
+  comboId String
+  item    Item   @relation(fields: [itemId], references: [id])
+  itemId  String
+
+  @@id([comboId, itemId])
 }

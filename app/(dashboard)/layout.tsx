@@ -11,7 +11,7 @@ export default function RootLayout({
       <Sidebar />
       <div className="w-full h-full flex flex-col">
         <Navbar />
-        <main className="flex-1 p-5 relative">{children}</main>
+        <main className="flex-1 p-5 relative overflow-auto">{children}</main>
       </div>
     </div>
   );
